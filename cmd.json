@@ -1,0 +1,246 @@
+[
+    {
+        "name": "ctrl",
+        "order": true,
+        "chose": "all",
+        "data": "none"
+    },
+    {
+        "name": "eth",
+        "optional": true,
+        "max": 1,
+        "found": 0,
+        "sub": [
+            {
+                "name": "ctrl",
+                "order": true,
+                "chose": "all",
+                "data": "none"
+            },
+            {
+                "name": "smac",
+                "optional": 0,
+                "max": 1,
+                "found": 0,
+                "type": "byte",
+                "len": 6,
+                "data": ""
+            },
+            {
+                "name": "dmac",
+                "optional": 0,
+                "max": 1,
+                "found": 0,
+                "type": "byte",
+                "len": 6,
+                "data": ""
+            },
+            {
+                "name": "proto",
+                "optional": 1,
+                "max": 1,
+                "found": 0,
+                "type": "byte",
+                "len": 2,
+                "data": "8809"
+            }
+        ]
+    },
+    {
+        "name": "oam",
+        "optional": 0,
+        "max": 1,
+        "found": 0,
+        "type": "byte",
+        "len": 1,
+        "data": "0x03",
+        "sub": [
+            {
+                "name": "ctrl",
+                "order": true,
+                "chose": "all",
+                "data": "none"
+            },
+            {
+                "name": "flags",
+                "optional": 0,
+                "max": 1,
+                "found": 0,
+                "type": "byte",
+                "len": 1,
+                "data": "0xFF"
+            },
+            {
+                "name": "op",
+                "optional": 0,
+                "max": 1,
+                "found": 0,
+                "sub": [
+                    {
+                        "name": "ctrl",
+                        "order": false,
+                        "chose": "one",
+                        "data": "none"
+                    },
+                    {
+                        "name": "info",
+                        "optional": 1,
+                        "max": 1,
+                        "found": 0
+                    },
+                    {
+                        "name": "req",
+                        "optional": 1,
+                        "max": 1,
+                        "found": 0
+                    },
+                    {
+                        "name": "resp",
+                        "optional": 1,
+                        "max": 1,
+                        "found": 0
+                    },
+                    {
+                        "name": "event",
+                        "optional": 1,
+                        "max": 1,
+                        "found": 0
+                    },
+                    {
+                        "name": "vendor",
+                        "optional": 1,
+                        "max": 1,
+                        "found": 0,
+                        "type": "byte",
+                        "len": 1,
+                        "data": "fe",
+                        "sub": [
+                            {
+                                "name": "ctrl",
+                                "order": false,
+                                "chose": "one",
+                                "data": "none"
+                            },
+                            {
+                                "name": "bcm",
+                                "optional": 1,
+                                "max": 1,
+                                "found": 0,
+                                "type": "byte",
+                                "len": 3,
+                                "data": "000db6",
+                                "sub": [
+                                    {
+                                        "name": "ctrl",
+                                        "order": false,
+                                        "chose": "one",
+                                        "data": "none"
+                                    },
+                                    {
+                                        "name": "info",
+                                        "optional": 1,
+                                        "max": 1,
+                                        "found": 0
+                                    },
+                                    {
+                                        "name": "getreq",
+                                        "optional": 1,
+                                        "max": 1,
+                                        "found": 0,
+                                        "type": "byte",
+                                        "len": 1,
+                                        "data": "01",
+                                        "sub": [
+                                            {
+                                                "name": "ctrl",
+                                                "order": false,
+                                                "chose": "mutli"
+                                            },
+                                            {
+                                                "name": "object",
+                                                "optional": 1
+                                            },
+                                            {
+                                                "name": "package",
+                                                "optional": 1
+                                            },
+                                            {
+                                                "name": "namebinding",
+                                                "optional": 1,
+                                                "type": "byte",
+                                                "len": 1,
+                                                "data": "06",
+                                                "sub": [
+                                                    {
+                                                        "name": "ctrl",
+                                                        "order": false,
+                                                        "chose": "one"
+                                                    },
+                                                    {
+                                                        "name": "port",
+                                                        "optional": 1,
+                                                        "type": "byte",
+                                                        "len": "2",
+                                                        "data": "0003",
+                                                        "sub": [
+                                                            {
+                                                                "name": "ctrl",
+                                                                "order": false,
+                                                                "chose": "one",
+                                                                "data": "bytes"
+                                                            },
+                                                            {
+                                                                "name": "num",
+                                                                "optional": 0,
+                                                                "type": "byte",
+                                                                "len": 1,
+                                                                "data": ""
+                                                            }
+                                                        ]
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "name": "attr",
+                                                "optional": 1,
+                                                "type": "byte",
+                                                "len": 1,
+                                                "data": "07",
+                                                "sub": [
+                                                    {
+                                                        "name": "rxframe64",
+                                                        "optional": 1,
+                                                        "type": "byte",
+                                                        "len": 2,
+                                                        "data": "0087",
+                                                        "sub": [
+                                                            {
+                                                                "name": "num",
+                                                                "optional": 0,
+                                                                "type": "byte",
+                                                                "len": 8,
+                                                                "data": ""
+                                                            }
+                                                        ]
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "name": "end",
+                                                "optional": 1,
+                                                "type": "byte",
+                                                
+                                                "len": 2,
+                                                "data": "0000"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    }
+]
