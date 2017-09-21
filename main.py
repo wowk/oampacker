@@ -15,6 +15,11 @@ class PacketPacker:
         else:
             return ''
 
+    def previous(self):
+        if self.index > 0:
+            self.index -= 1
+        return self.next()
+
     def next(self):
         if self.index < len(self.arg):
             arg = self.arg[self.index]
@@ -30,38 +35,43 @@ class PacketPacker:
     def pack(self):
         return self.__pack(self.desc)
 
+    def reset_found_counter(self, obj):
+        if isinstance(obj, dict) is True:
+            if 'found' in obj:
+                obj['found'] = 0
+            if 'sub' in obj:
+                self.reset_found_counter(obj['sub'])
+        elif isinstance(obj, list):
+            if obj[0]['chose'] != 'multi':
+                for d in obj:
+                    self.reset_found_counter(d)
+
     def __pack(self, desc):
         return self.__pack_list(desc)
-    """
-            {
-                "name": "flags",
-                "optional": 0,
-                "max": 1,
-                "found": 0,
-                "type": "byte",
-                "len": 1,
-                "data": "0xFF"
-            },
-    """
-    def __pack_dict(self, desc, use_default=True):
-        print(desc)
+
+    def __pack_dict(self, desc, use_default=False):
         if 'max' in desc:
             if desc['found'] < desc['max']:
                 desc['found'] += 1
             else:
-                raise Exception('')
+                raise Exception(desc['name'])
 
         if 'len' in desc and desc['len'] > 0:
-            arg = self.next()
-            if arg.startswith('--') is True:
+            if use_default is True:
                 if desc['data'] == '':
                     raise Exception('')
                 else:
                     print('%s = %s' % (desc['name'], desc['data']))
-                    self.back()
-                    pass
             else:
-                print('%s = %s' % (desc['name'], arg))
+                arg = self.next()
+                if arg.startswith('--') is True:
+                    if desc['data'] == '':
+                        raise Exception('')
+                    else:
+                        print('%s = %s' % (desc['name'], desc['data']))
+                        self.back()
+                else:
+                    print('%s = %s' % (desc['name'], arg))
 
         if 'sub' in desc:
             return self.__pack_list(desc['sub'])
@@ -87,11 +97,11 @@ class PacketPacker:
         if chose == 'one':
             #必须指定一个选项
             if arg == '':
-                raise Exception('need at least on option after %s' % self.prev())
+                raise Exception('need at least on option after %s' % self.previous())
 
             for d in desc:
                 if d['name'] == arg:
-                    return self.__pack_dict(d, True)
+                    return self.__pack_dict(d)
             else:
                 raise Exception('unknown option %s' % arg)
 
@@ -108,7 +118,7 @@ class PacketPacker:
                         elif len(arg) != 0:
                             raise Exception('argument %s is not an option' % arg)
                     else:
-                        self.__pack_dict(d)
+                        self.__pack_dict(d, use_default=True)
                 else:
                     if arg != '':
                         self.back()
@@ -151,17 +161,17 @@ class PacketPacker:
                         elif d['optional'] is False:
                             self.__pack_dict(d)
                             break
+                        self.reset_found_counter(d)
                 else:
                     if len(arg) != 0:
                         self.back()
-
             else:
                 options = {desc[i]['name']:i for i in range(len(desc))}
                 not_optional = [ d['name'] for d in desc if d['optional'] is False]
-
                 while True:
                     if arg in options:
                         self.__pack_dict(desc[options[arg]])
+                        self.reset_found_counter(desc[options[arg]])
                         if arg in not_optional:
                             not_optional.remove(arg)
                     else:

@@ -228,7 +228,6 @@
                                                 "name": "end",
                                                 "optional": false,
                                                 "type": "byte",
-
                                                 "len": 2,
                                                 "data": "0000"
                                             }
@@ -273,135 +272,85 @@
                                                         "sub": [
                                                             {
                                                                 "name": "ctrl",
-                                                                "order": true,
-                                                                "chose": "all",
+                                                                "order": false,
+                                                                "chose": "multi",
                                                                 "padding": "bytes"
                                                             },
                                                             {
-                                                                "name": "dir",
+                                                                "name": "rule",
                                                                 "optional": false,
                                                                 "max": 1,
                                                                 "found": 0,
-                                                                "len": 1,
-                                                                "data": ""
-                                                            },
-                                                            {
-                                                                "name": "flags",
-                                                                "optional": false,
-                                                                "max": 1,
-                                                                "found": 0,
-                                                                "len": 1,
-                                                                "data": ""
-                                                            },
-                                                            {
-                                                                "name": "objtype",
-                                                                "optional": false,
-                                                                "max": 1,
-                                                                "found": 0,
-                                                                "type": "byte",
-                                                                "len": 1,
-                                                                "data": ""
-                                                            },
-                                                            {
-                                                                "name": "queue",
-                                                                "optional": false,
-                                                                "max": 1,
-                                                                "found": 0,
-                                                                "type": "byte",
-                                                                "len": 1,
-                                                                "data": ""
-                                                            },
-                                                            {
-                                                                "name": "vid_or_cos",
-                                                                "optional": false,
-                                                                "max": 1,
-                                                                "found": 0,
-                                                                "type": "byte",
-                                                                "len": 1,
-                                                                "data": ""
-                                                            },
-                                                            {
-                                                                "name": "_reserved1",
-                                                                "optional": false,
-                                                                "max": 1,
-                                                                "found": 0,
-                                                                "type": "byte",
-                                                                "len": 1,
-                                                                "data": "00"
-                                                            },
-                                                            {
-                                                                "name": "precedence",
-                                                                "optional": false,
-                                                                "max": 1,
-                                                                "found": 0,
-                                                                "type": "byte",
-                                                                "len": 1,
-                                                                "data": ""
-                                                            },
-                                                            {
-                                                                "name": "action",
-                                                                "optional": false,
-                                                                "max": 1,
-                                                                "found": 0,
-                                                                "sub":[
-                                                                    {
-                                                                        "name": "ctrl",
-                                                                        "order": false,
-                                                                        "chose": "multi",
-                                                                        "padding": "none"
-                                                                    },
-                                                                    {
-                                                                        "name": "set_vid_add_vlan_tag",
-                                                                        "optional": true,
-                                                                        "max": 1,
-                                                                        "found": 0,
-                                                                        "len": 1,
-                                                                        "data": "5"
-                                                                    }
-                                                                ]
-                                                            },
-                                                            {
-                                                                "name": "newclause",
-                                                                "optional": false,
                                                                 "sub": [
                                                                     {
                                                                         "name": "ctrl",
                                                                         "order": true,
                                                                         "chose": "all",
-                                                                        "padding": "count"
+                                                                        "padding": "none"
                                                                     },
                                                                     {
-                                                                        "name": "field_select",
+                                                                        "name": "dir",
                                                                         "optional": false,
                                                                         "max": 1,
                                                                         "found": 0,
-                                                                        "sub": [
-                                                                            {
-                                                                                "name": "ctrl",
-                                                                                "order": false,
-                                                                                "chose": "one",
-                                                                                "padding": "none"
-                                                                            },
-                                                                            {
-                                                                                "name": "da",
-                                                                                "optional": true,
-                                                                                "tyoe": "byte",
-                                                                                "len": 1,
-                                                                                "data": "00"
-                                                                            }
-                                                                        ]
+                                                                        "len": 1,
+                                                                        "data": ""
                                                                     },
                                                                     {
-                                                                        "name": "lookup_val",
+                                                                        "name": "flags",
+                                                                        "optional": false,
+                                                                        "max": 1,
+                                                                        "found": 0,
+                                                                        "len": 1,
+                                                                        "data": ""
+                                                                    },
+                                                                    {
+                                                                        "name": "objtype",
                                                                         "optional": false,
                                                                         "max": 1,
                                                                         "found": 0,
                                                                         "type": "byte",
-                                                                        "len": 8,
-                                                                        "data": "0000000000000000"
+                                                                        "len": 1,
+                                                                        "data": ""
                                                                     },
                                                                     {
-                                                                        "name": "op",
+                                                                        "name": "queue",
+                                                                        "optional": false,
+                                                                        "max": 1,
+                                                                        "found": 0,
+                                                                        "type": "byte",
+                                                                        "len": 1,
+                                                                        "data": ""
+                                                                    },
+                                                                    {
+                                                                        "name": "vid_or_cos",
+                                                                        "optional": false,
+                                                                        "max": 1,
+                                                                        "found": 0,
+                                                                        "type": "byte",
+                                                                        "len": 1,
+                                                                        "data": ""
+                                                                    },
+                                                                    {
+                                                                        "name": "_reserved1",
+                                                                        "optional": false,
+                                                                        "max": 1,
+                                                                        "found": 0,
+                                                                        "type": "byte",
+                                                                        "len": 1,
+                                                                        "data": "00"
+                                                                    },
+                                                                    {
+                                                                        "name": "precedence",
+                                                                        "optional": false,
+                                                                        "max": 1,
+                                                                        "found": 0,
+                                                                        "type": "byte",
+                                                                        "len": 1,
+                                                                        "data": ""
+                                                                    },
+                                                                    {
+                                                                        "name": "action",
                                                                         "optional": false,
                                                                         "max": 1,
                                                                         "found": 0,
@@ -409,15 +358,91 @@
                                                                             {
                                                                                 "name": "ctrl",
                                                                                 "order": false,
-                                                                                "chose": "one",
+                                                                                "chose": "multi",
                                                                                 "padding": "none"
                                                                             },
                                                                             {
-                                                                                "name": "lt",
-                                                                                "optional": false,
-                                                                                "type": "byte",
+                                                                                "name": "set_vid_add_vlan_tag",
+                                                                                "optional": true,
+                                                                                "max": 1,
+                                                                                "found": 0,
                                                                                 "len": 1,
-                                                                                "data": "03"
+                                                                                "data": "5"
+                                                                            }
+                                                                        ]
+                                                                    },
+                                                                    {
+                                                                        "name": "newclause",
+                                                                        "optional": false,
+                                                                        "sub": [
+                                                                            {
+                                                                                "name": "ctrl",
+                                                                                "order": false,
+                                                                                "chose": "multi",
+                                                                                "padding": "count"
+                                                                            },
+                                                                            {
+                                                                                "name": "clause",
+                                                                                "optional": true,
+                                                                                "sub": [
+                                                                                    {
+                                                                                        "name": "ctrl",
+                                                                                        "order": true,
+                                                                                        "chose": "all",
+                                                                                        "padding": "none"
+                                                                                    },
+                                                                                    {
+                                                                                        "name": "field_select",
+                                                                                        "optional": false,
+                                                                                        "max": 1,
+                                                                                        "found": 0,
+                                                                                        "sub": [
+                                                                                            {
+                                                                                                "name": "ctrl",
+                                                                                                "order": false,
+                                                                                                "chose": "one",
+                                                                                                "padding": "none"
+                                                                                            },
+                                                                                            {
+                                                                                                "name": "da",
+                                                                                                "optional": true,
+                                                                                                "tyoe": "byte",
+                                                                                                "len": 1,
+                                                                                                "data": "00"
+                                                                                            }
+                                                                                        ]
+                                                                                    },
+                                                                                    {
+                                                                                        "name": "lookup_val",
+                                                                                        "optional": false,
+                                                                                        "max": 1,
+                                                                                        "found": 0,
+                                                                                        "type": "byte",
+                                                                                        "len": 8,
+                                                                                        "data": "0000000000000000"
+                                                                                    },
+                                                                                    {
+                                                                                        "name": "op",
+                                                                                        "optional": false,
+                                                                                        "max": 1,
+                                                                                        "found": 0,
+                                                                                        "sub": [
+                                                                                            {
+                                                                                                "name": "ctrl",
+                                                                                                "order": false,
+                                                                                                "chose": "one",
+                                                                                                "padding": "none"
+                                                                                            },
+                                                                                            {
+                                                                                                "name": "lt",
+                                                                                                "optional": false,
+                                                                                                "type": "byte",
+                                                                                                "len": 1,
+                                                                                                "data": "03"
+                                                                                            }
+                                                                                        ]
+                                                                                    }
+                                                                                ]
                                                                             }
                                                                         ]
                                                                     }
