@@ -59,16 +59,16 @@
                 "name": "ctrl",
                 "order": true,
                 "chose": "all",
-                "data": "none"
+                "padding": "none"
             },
             {
                 "name": "flags",
                 "optional": false,
                 "max": 1,
                 "found": 0,
-                "type": "byte",
+                "type": "hex",
                 "len": 1,
-                "data": "0xFF"
+                "data": "0xff"
             },
             {
                 "name": "op",
@@ -80,7 +80,7 @@
                         "name": "ctrl",
                         "order": false,
                         "chose": "one",
-                        "data": "none"
+                        "padding": "none"
                     },
                     {
                         "name": "info",
@@ -111,15 +111,15 @@
                         "optional": true,
                         "max": 1,
                         "found": 0,
-                        "type": "byte",
+                        "type": "hex",
                         "len": 1,
-                        "data": "fe",
+                        "data": "0xfe",
                         "sub": [
                             {
                                 "name": "ctrl",
                                 "order": true,
                                 "chose": "one",
-                                "data": "none"
+                                "padding": "none"
                             },
                             {
                                 "name": "bcm",
@@ -134,7 +134,7 @@
                                         "name": "ctrl",
                                         "order": false,
                                         "chose": "one",
-                                        "data": "none"
+                                        "padding": "none"
                                     },
                                     {
                                         "name": "info",
@@ -147,9 +147,9 @@
                                         "optional": true,
                                         "max": 1,
                                         "found": 0,
-                                        "type": "byte",
+                                        "type": "hex",
                                         "len": 1,
-                                        "data": "01",
+                                        "data": "0x01",
                                         "sub": [
                                             {
                                                 "name": "ctrl",
@@ -167,9 +167,9 @@
                                             {
                                                 "name": "namebinding",
                                                 "optional": true,
-                                                "type": "byte",
+                                                "type": "hex",
                                                 "len": 1,
-                                                "data": "06",
+                                                "data": "0x06",
                                                 "sub": [
                                                     {
                                                         "name": "ctrl",
@@ -180,9 +180,9 @@
                                                     {
                                                         "name": "port",
                                                         "optional": true,
-                                                        "type": "byte",
+                                                        "type": "hex",
                                                         "len": 2,
-                                                        "data": "0003",
+                                                        "data": "0x0003",
                                                         "sub": [
                                                             {
                                                                 "name": "ctrl",
@@ -194,7 +194,7 @@
                                                             {
                                                                 "name": "num",
                                                                 "optional": false,
-                                                                "type": "byte",
+                                                                "type": "int",
                                                                 "len": 1,
                                                                 "data": ""
                                                             }
@@ -205,9 +205,9 @@
                                             {
                                                 "name": "attr",
                                                 "optional": 1,
-                                                "type": "byte",
+                                                "type": "hex",
                                                 "len": 1,
-                                                "data": "07",
+                                                "data": "0x07",
                                                 "sub": [
                                                     {
                                                         "name": "ctrl",
@@ -218,18 +218,18 @@
                                                     {
                                                         "name": "rxframeok",
                                                         "optional": true,
-                                                        "type": "byte",
+                                                        "type": "int",
                                                         "len": 2,
-                                                        "data": "0087"
+                                                        "data": ""
                                                     }
                                                 ]
                                             },
                                             {
                                                 "name": "end",
                                                 "optional": false,
-                                                "type": "byte",
+                                                "type": "hex",
                                                 "len": 2,
-                                                "data": "0000"
+                                                "data": "0x0000"
                                             }
                                         ]
                                     },
@@ -238,9 +238,9 @@
                                         "optional": true,
                                         "max": 1,
                                         "found": 0,
-                                        "type": "byte",
+                                        "type": "hex",
                                         "len": 1,
-                                        "data": "01",
+                                        "data": "0x01",
                                         "sub": [
                                             {
                                                 "name": "ctrl",
@@ -251,9 +251,9 @@
                                             {
                                                 "name": "action",
                                                 "optional": true,
-                                                "type": "byte",
+                                                "type": "hex",
                                                 "len": 1,
-                                                "data": "09",
+                                                "data": "0x09",
                                                 "sub": [
                                                     {
                                                         "name": "ctrl",
@@ -266,9 +266,9 @@
                                                         "optional": true,
                                                         "max": 1,
                                                         "found": 0,
-                                                        "type": "byte",
+                                                        "type": "hex",
                                                         "len": 1,
-                                                        "data": "A1",
+                                                        "data": "0xa1",
                                                         "sub": [
                                                             {
                                                                 "name": "ctrl",
@@ -293,6 +293,7 @@
                                                                         "optional": false,
                                                                         "max": 1,
                                                                         "found": 0,
+                                                                        "type": "int",
                                                                         "len": 1,
                                                                         "data": ""
                                                                     },
@@ -301,6 +302,7 @@
                                                                         "optional": false,
                                                                         "max": 1,
                                                                         "found": 0,
+                                                                        "type": "int",
                                                                         "len": 1,
                                                                         "data": ""
                                                                     },
@@ -309,7 +311,7 @@
                                                                         "optional": false,
                                                                         "max": 1,
                                                                         "found": 0,
-                                                                        "type": "byte",
+                                                                        "type": "int",
                                                                         "len": 1,
                                                                         "data": ""
                                                                     },
@@ -318,7 +320,7 @@
                                                                         "optional": false,
                                                                         "max": 1,
                                                                         "found": 0,
-                                                                        "type": "byte",
+                                                                        "type": "int",
                                                                         "len": 1,
                                                                         "data": ""
                                                                     },
@@ -327,7 +329,7 @@
                                                                         "optional": false,
                                                                         "max": 1,
                                                                         "found": 0,
-                                                                        "type": "byte",
+                                                                        "type": "int",
                                                                         "len": 1,
                                                                         "data": ""
                                                                     },
@@ -336,16 +338,16 @@
                                                                         "optional": false,
                                                                         "max": 1,
                                                                         "found": 0,
-                                                                        "type": "byte",
+                                                                        "type": "int",
                                                                         "len": 1,
-                                                                        "data": "00"
+                                                                        "data": "0"
                                                                     },
                                                                     {
                                                                         "name": "precedence",
                                                                         "optional": false,
                                                                         "max": 1,
                                                                         "found": 0,
-                                                                        "type": "byte",
+                                                                        "type": "int",
                                                                         "len": 1,
                                                                         "data": ""
                                                                     },
@@ -366,6 +368,7 @@
                                                                                 "optional": true,
                                                                                 "max": 1,
                                                                                 "found": 0,
+                                                                                "type": "int",
                                                                                 "len": 1,
                                                                                 "data": "5"
                                                                             }
@@ -406,9 +409,9 @@
                                                                                             {
                                                                                                 "name": "da",
                                                                                                 "optional": true,
-                                                                                                "tyoe": "byte",
+                                                                                                "type": "int",
                                                                                                 "len": 1,
-                                                                                                "data": "00"
+                                                                                                "data": "0"
                                                                                             }
                                                                                         ]
                                                                                     },
@@ -436,9 +439,9 @@
                                                                                             {
                                                                                                 "name": "lt",
                                                                                                 "optional": false,
-                                                                                                "type": "byte",
+                                                                                                "type": "hex",
                                                                                                 "len": 1,
-                                                                                                "data": "03"
+                                                                                                "data": "0x03"
                                                                                             }
                                                                                         ]
                                                                                     }
