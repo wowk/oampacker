@@ -128,25 +128,23 @@ class PacketPacker:
             raise Exception('argument %s is not an option' % arg)
         return arg
 
-    def __chose_one(self, desc):
+    def __chose_one(self, ctrl, desc):
         arg = self.__option()
         if len(arg) == 0:
             raise Exception('need at least one option after %s' % self.__previous())
-
-        padding = desc[0]['padding']
+        #print(ctrl)
+        padding = ctrl['padding']
         if padding != 'none':
             padding_len = desc[0]['len']
 
         for d in desc:
             if d['name'] == arg:
-                if padding != 'none':
-                    padding_index = self.buf.push()
                 ret = self.__pack_dict(d)
-
+                return ret
         else:
             raise Exception('unknown option %s' % arg)
 
-    def __chose_all_by_order(self, desc):
+    def __chose_all_by_order(self, ctrl, desc):
         arg = self.__option()
         if len(arg) == 0:
             raise Exception('need at least one option after %s' % self.__previous())
@@ -162,7 +160,7 @@ class PacketPacker:
                 self.__back()
         return True
 
-    def __chose_all_without_order(self, desc):
+    def __chose_all_without_order(self, ctrl, desc):
         arg = self.__option()
         options = [key['name'] for key in desc]
         while True:
@@ -180,7 +178,7 @@ class PacketPacker:
                     break
             arg = self.__option()
 
-    def __chose_multi_by_order(self, desc):
+    def __chose_multi_by_order(self, ctrl, desc):
         arg = self.__option()
 
         for d in desc:
@@ -198,7 +196,7 @@ class PacketPacker:
             if len(arg) != 0:
                 self.__back()
 
-    def __chose_multi_without_order(self, desc):
+    def __chose_multi_without_order(self, ctrl, desc):
         arg = self.__option()
 
         options = {desc[i]['name']: i for i in range(len(desc))}
@@ -224,21 +222,21 @@ class PacketPacker:
 
         order = desc[0]['order']
         chose = desc[0]['chose']
-        padding = desc[0]['padding']
+        ctrl = desc[0]
         desc = desc[1:]
 
         if chose == 'one':
-            ret = self.__chose_one(desc)
+            ret = self.__chose_one(ctrl, desc)
         elif chose == 'all':
             if order is True:
-                ret = self.__chose_all_by_order(desc)
+                ret = self.__chose_all_by_order(ctrl, desc)
             else:
-                ret = self.__chose_all_without_order(desc)
+                ret = self.__chose_all_without_order(ctrl, desc)
         elif chose == 'multi':
             if order is True:
-                ret = self.__chose_multi_by_order(desc)
+                ret = self.__chose_multi_by_order(ctrl, desc)
             else:
-                ret = self.__chose_multi_without_order(desc)
+                ret = self.__chose_multi_without_order(ctrl, desc)
         else:
             raise Exception('')
 
