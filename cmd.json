@@ -3,7 +3,7 @@
         "name": "ctrl",
         "order": true,
         "chose": "all",
-        "data": "none"
+        "padding": "none"
     },
     {
         "name": "eth",
@@ -15,7 +15,7 @@
                 "name": "ctrl",
                 "order": true,
                 "chose": "all",
-                "data": "none"
+                "padding": "none"
             },
             {
                 "name": "dmac",
@@ -138,13 +138,13 @@
                                     },
                                     {
                                         "name": "info",
-                                        "optional": 1,
+                                        "optional": true,
                                         "max": 1,
                                         "found": 0
                                     },
                                     {
                                         "name": "getreq",
-                                        "optional": 1,
+                                        "optional": true,
                                         "max": 1,
                                         "found": 0,
                                         "type": "byte",
@@ -158,15 +158,15 @@
                                             },
                                             {
                                                 "name": "object",
-                                                "optional": 1
+                                                "optional": true
                                             },
                                             {
                                                 "name": "package",
-                                                "optional": 1
+                                                "optional": true
                                             },
                                             {
                                                 "name": "namebinding",
-                                                "optional": 1,
+                                                "optional": true,
                                                 "type": "byte",
                                                 "len": 1,
                                                 "data": "06",
@@ -174,11 +174,12 @@
                                                     {
                                                         "name": "ctrl",
                                                         "order": false,
-                                                        "chose": "one"
+                                                        "chose": "one",
+                                                        "padding": "none"
                                                     },
                                                     {
                                                         "name": "port",
-                                                        "optional": 1,
+                                                        "optional": true,
                                                         "type": "byte",
                                                         "len": 2,
                                                         "data": "0003",
@@ -187,7 +188,8 @@
                                                                 "name": "ctrl",
                                                                 "order": false,
                                                                 "chose": "all",
-                                                                "data": "bytes"
+                                                                "padding": "bytes",
+                                                                "len": 1
                                                             },
                                                             {
                                                                 "name": "num",
@@ -210,38 +212,220 @@
                                                     {
                                                         "name": "ctrl",
                                                         "order": false,
-                                                        "chose": "one"
+                                                        "chose": "one",
+                                                        "padding": "none"
                                                     },
                                                     {
                                                         "name": "rxframeok",
-                                                        "optional": 1,
+                                                        "optional": true,
                                                         "type": "byte",
                                                         "len": 2,
-                                                        "data": "0087",
-                                                        "sub": [
-                                                            {
-                                                                "name": "ctrl",
-                                                                "order": false,
-                                                                "chose": "one"
-                                                            },
-                                                            {
-                                                                "name": "num",
-                                                                "optional": 0,
-                                                                "type": "byte",
-                                                                "len": 8,
-                                                                "data": ""
-                                                            }
-                                                        ]
+                                                        "data": "0087"
                                                     }
                                                 ]
                                             },
                                             {
                                                 "name": "end",
-                                                "optional": 1,
+                                                "optional": false,
                                                 "type": "byte",
-                                                
+
                                                 "len": 2,
                                                 "data": "0000"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "name": "setreq",
+                                        "optional": true,
+                                        "max": 1,
+                                        "found": 0,
+                                        "type": "byte",
+                                        "len": 1,
+                                        "data": "01",
+                                        "sub": [
+                                            {
+                                                "name": "ctrl",
+                                                "order": "false",
+                                                "chose": "multi",
+                                                "padding": "none"
+                                            },
+                                            {
+                                                "name": "action",
+                                                "optional": true,
+                                                "type": "byte",
+                                                "len": 1,
+                                                "data": "09",
+                                                "sub": [
+                                                    {
+                                                        "name": "ctrl",
+                                                        "order": false,
+                                                        "chose": "multi",
+                                                        "padding": "bytes"
+                                                    },
+                                                    {
+                                                        "name": "newrule",
+                                                        "optional": true,
+                                                        "max": 1,
+                                                        "found": 0,
+                                                        "type": "byte",
+                                                        "len": 1,
+                                                        "data": "A1",
+                                                        "sub": [
+                                                            {
+                                                                "name": "ctrl",
+                                                                "order": true,
+                                                                "chose": "all",
+                                                                "padding": "bytes"
+                                                            },
+                                                            {
+                                                                "name": "dir",
+                                                                "optional": false,
+                                                                "max": 1,
+                                                                "found": 0,
+                                                                "len": 1,
+                                                                "data": ""
+                                                            },
+                                                            {
+                                                                "name": "flags",
+                                                                "optional": false,
+                                                                "max": 1,
+                                                                "found": 0,
+                                                                "len": 1,
+                                                                "data": ""
+                                                            },
+                                                            {
+                                                                "name": "objtype",
+                                                                "optional": false,
+                                                                "max": 1,
+                                                                "found": 0,
+                                                                "type": "byte",
+                                                                "len": 1,
+                                                                "data": ""
+                                                            },
+                                                            {
+                                                                "name": "queue",
+                                                                "optional": false,
+                                                                "max": 1,
+                                                                "found": 0,
+                                                                "type": "byte",
+                                                                "len": 1,
+                                                                "data": ""
+                                                            },
+                                                            {
+                                                                "name": "vid_or_cos",
+                                                                "optional": false,
+                                                                "max": 1,
+                                                                "found": 0,
+                                                                "type": "byte",
+                                                                "len": 1,
+                                                                "data": ""
+                                                            },
+                                                            {
+                                                                "name": "_reserved1",
+                                                                "optional": false,
+                                                                "max": 1,
+                                                                "found": 0,
+                                                                "type": "byte",
+                                                                "len": 1,
+                                                                "data": "00"
+                                                            },
+                                                            {
+                                                                "name": "precedence",
+                                                                "optional": false,
+                                                                "max": 1,
+                                                                "found": 0,
+                                                                "type": "byte",
+                                                                "len": 1,
+                                                                "data": ""
+                                                            },
+                                                            {
+                                                                "name": "action",
+                                                                "optional": false,
+                                                                "max": 1,
+                                                                "found": 0,
+                                                                "sub":[
+                                                                    {
+                                                                        "name": "ctrl",
+                                                                        "order": false,
+                                                                        "chose": "multi",
+                                                                        "padding": "none"
+                                                                    },
+                                                                    {
+                                                                        "name": "set_vid_add_vlan_tag",
+                                                                        "optional": true,
+                                                                        "max": 1,
+                                                                        "found": 0,
+                                                                        "len": 1,
+                                                                        "data": "5"
+                                                                    }
+                                                                ]
+                                                            },
+                                                            {
+                                                                "name": "newclause",
+                                                                "optional": false,
+                                                                "sub": [
+                                                                    {
+                                                                        "name": "ctrl",
+                                                                        "order": true,
+                                                                        "chose": "all",
+                                                                        "padding": "count"
+                                                                    },
+                                                                    {
+                                                                        "name": "field_select",
+                                                                        "optional": false,
+                                                                        "max": 1,
+                                                                        "found": 0,
+                                                                        "sub": [
+                                                                            {
+                                                                                "name": "ctrl",
+                                                                                "order": false,
+                                                                                "chose": "one",
+                                                                                "padding": "none"
+                                                                            },
+                                                                            {
+                                                                                "name": "da",
+                                                                                "optional": true,
+                                                                                "tyoe": "byte",
+                                                                                "len": 1,
+                                                                                "data": "00"
+                                                                            }
+                                                                        ]
+                                                                    },
+                                                                    {
+                                                                        "name": "lookup_val",
+                                                                        "optional": false,
+                                                                        "max": 1,
+                                                                        "found": 0,
+                                                                        "type": "byte",
+                                                                        "len": 8,
+                                                                        "data": "0000000000000000"
+                                                                    },
+                                                                    {
+                                                                        "name": "op",
+                                                                        "optional": false,
+                                                                        "max": 1,
+                                                                        "found": 0,
+                                                                        "sub": [
+                                                                            {
+                                                                                "name": "ctrl",
+                                                                                "order": false,
+                                                                                "chose": "one",
+                                                                                "padding": "none"
+                                                                            },
+                                                                            {
+                                                                                "name": "lt",
+                                                                                "optional": false,
+                                                                                "type": "byte",
+                                                                                "len": 1,
+                                                                                "data": "03"
+                                                                            }
+                                                                        ]
+                                                                    }
+                                                                ]
+                                                            }
+                                                        ]
+                                                    }
+                                                ]
                                             }
                                         ]
                                     }
