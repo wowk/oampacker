@@ -7,7 +7,7 @@
     },
     {
         "name": "eth",
-        "optional": true,
+        "optional": false,
         "max": 1,
         "found": 0,
         "sub": [
@@ -18,40 +18,40 @@
                 "data": "none"
             },
             {
-                "name": "smac",
-                "optional": 0,
+                "name": "dmac",
+                "optional": false,
                 "max": 1,
                 "found": 0,
-                "type": "byte",
+                "type": "mac",
                 "len": 6,
                 "data": ""
             },
             {
-                "name": "dmac",
-                "optional": 0,
+                "name": "smac",
+                "optional": false,
                 "max": 1,
                 "found": 0,
-                "type": "byte",
+                "type": "mac",
                 "len": 6,
                 "data": ""
             },
             {
                 "name": "proto",
-                "optional": 1,
+                "optional": false,
                 "max": 1,
                 "found": 0,
-                "type": "byte",
+                "type": "hex",
                 "len": 2,
-                "data": "8809"
+                "data": "0x8809"
             }
         ]
     },
     {
         "name": "oam",
-        "optional": 0,
+        "optional": false,
         "max": 1,
         "found": 0,
-        "type": "byte",
+        "type": "hex",
         "len": 1,
         "data": "0x03",
         "sub": [
@@ -63,7 +63,7 @@
             },
             {
                 "name": "flags",
-                "optional": 0,
+                "optional": false,
                 "max": 1,
                 "found": 0,
                 "type": "byte",
@@ -72,7 +72,7 @@
             },
             {
                 "name": "op",
-                "optional": 0,
+                "optional": false,
                 "max": 1,
                 "found": 0,
                 "sub": [
@@ -84,31 +84,31 @@
                     },
                     {
                         "name": "info",
-                        "optional": 1,
+                        "optional": true,
                         "max": 1,
                         "found": 0
                     },
                     {
                         "name": "req",
-                        "optional": 1,
+                        "optional": true,
                         "max": 1,
                         "found": 0
                     },
                     {
                         "name": "resp",
-                        "optional": 1,
+                        "optional": true,
                         "max": 1,
                         "found": 0
                     },
                     {
                         "name": "event",
-                        "optional": 1,
+                        "optional": true,
                         "max": 1,
                         "found": 0
                     },
                     {
                         "name": "vendor",
-                        "optional": 1,
+                        "optional": true,
                         "max": 1,
                         "found": 0,
                         "type": "byte",
@@ -117,13 +117,13 @@
                         "sub": [
                             {
                                 "name": "ctrl",
-                                "order": false,
+                                "order": true,
                                 "chose": "one",
                                 "data": "none"
                             },
                             {
                                 "name": "bcm",
-                                "optional": 1,
+                                "optional": true,
                                 "max": 1,
                                 "found": 0,
                                 "type": "byte",
@@ -154,7 +154,7 @@
                                             {
                                                 "name": "ctrl",
                                                 "order": false,
-                                                "chose": "mutli"
+                                                "chose": "multi"
                                             },
                                             {
                                                 "name": "object",
@@ -180,18 +180,18 @@
                                                         "name": "port",
                                                         "optional": 1,
                                                         "type": "byte",
-                                                        "len": "2",
+                                                        "len": 2,
                                                         "data": "0003",
                                                         "sub": [
                                                             {
                                                                 "name": "ctrl",
                                                                 "order": false,
-                                                                "chose": "one",
+                                                                "chose": "all",
                                                                 "data": "bytes"
                                                             },
                                                             {
                                                                 "name": "num",
-                                                                "optional": 0,
+                                                                "optional": false,
                                                                 "type": "byte",
                                                                 "len": 1,
                                                                 "data": ""
@@ -208,12 +208,22 @@
                                                 "data": "07",
                                                 "sub": [
                                                     {
-                                                        "name": "rxframe64",
+                                                        "name": "ctrl",
+                                                        "order": false,
+                                                        "chose": "one"
+                                                    },
+                                                    {
+                                                        "name": "rxframeok",
                                                         "optional": 1,
                                                         "type": "byte",
                                                         "len": 2,
                                                         "data": "0087",
                                                         "sub": [
+                                                            {
+                                                                "name": "ctrl",
+                                                                "order": false,
+                                                                "chose": "one"
+                                                            },
                                                             {
                                                                 "name": "num",
                                                                 "optional": 0,

@@ -3,35 +3,37 @@ import sys
 
 
 class PacketPacker:
-	def __init__(self, json_file):
-		self.arg = sys.argv[1:]
-		self.index = 0
+    def __init__(self, json_file):
+        self.arg = sys.argv
+        self.index = 1
+        with open(json_file) as fp:
+            self.desc = json.load(fp)
 
-	def peek(self):
-		if self.index < len(self.arg):
-			return self.arg[self.index]
-		else:
-			return ''
+    def peek(self):
+        if self.index < len(self.arg):
+            return self.arg[self.index]
+        else:
+            return ''
 
-	def next(self):
-		if self.index < len(self.arg):
-			ret = self.arg[self.index]
-			self.index += 1
-		else:
-			ret = ''
-		return ret
+    def next(self):
+        if self.index < len(self.arg):
+            arg = self.arg[self.index]
+            self.index += 1
+        else:
+            arg = ''
+        return arg
 
-	def back(self):
-		if self.index > 0:
-			self.index -= 1
+    def back(self):
+        if self.index > 0:
+            self.index -= 1
 
-	def pack(self):
-		pass
+    def pack(self):
+        return self.__pack(self.desc)
 
-	def __pack(self, desc):
-		return self.__pack_list(desc)
-	"""
-	        {
+    def __pack(self, desc):
+        return self.__pack_list(desc)
+    """
+            {
                 "name": "flags",
                 "optional": 0,
                 "max": 1,
@@ -40,58 +42,143 @@ class PacketPacker:
                 "len": 1,
                 "data": "0xFF"
             },
-	"""
-	def __pack_dict(self, desc, use_default=True):
-		if desc['found'] < desc['max']:
-			desc['found'] += 1
-		else:
-			raise Exception('')
+    """
+    def __pack_dict(self, desc, use_default=True):
+        print(desc)
+        if 'max' in desc:
+            if desc['found'] < desc['max']:
+                desc['found'] += 1
+            else:
+                raise Exception('')
 
-		if 'len' in desc and desc['len'] > 0:
-			arg = self.next()
-			if arg.startswith('--') is True:
-				if desc['data'] == '':
-					raise Exception('')
-				else:
-					self.back()
-					pass
-			else:
-				print(arg)
-				pass
+        if 'len' in desc and desc['len'] > 0:
+            arg = self.next()
+            if arg.startswith('--') is True:
+                if desc['data'] == '':
+                    raise Exception('')
+                else:
+                    print('%s = %s' % (desc['name'], desc['data']))
+                    self.back()
+                    pass
+            else:
+                print('%s = %s' % (desc['name'], arg))
 
-		if 'sub' in desc:
-			return self.__pack_list(desc['sub'])
+        if 'sub' in desc:
+            return self.__pack_list(desc['sub'])
 
-		return True
+        return True
 
-	def __pack_list(self, desc):
-		order = desc[0]['order']
-		chose = desc[0]['chose']
+    def __pack_list(self, desc):
 
-		desc = desc[1:]
+        if len(desc) < 1:
+            return 0
 
-		arg = self.next()
-		if arg.startswith('--') is False:
-			raise Exception('')
-		else:
-			arg = arg[2:]
+        order = desc[0]['order']
+        chose = desc[0]['chose']
 
-		if chose == 'one':
-			for d in desc:
-				if d['name'] == arg:
-					return self.__pack_dict(d, )
+        desc = desc[1:]
 
-		elif chose == 'any':
-			for d in desc:
-				if d['name'] == arg:
-					arg = self.next()[2:]
-					if arg == '':
-						raise Exception('')
-				self.__pack_dict(d)
-			return True
-		elif chose == 'multi':
-			not_optional = [item['name'] for item in desc if item['optional'] is True]
-			optional = [item['name'] for item in desc if item['optional'] is False]
-			index = {desc[i]['name']: i for i in range(len(desc))}
-		else:
-			raise Exception('')
+        arg = self.next()
+        if arg.startswith('--') is True:
+            arg = arg[2:]
+        elif len(arg) != 0:
+            raise Exception('argument %s is not an option' % arg)
+
+        if chose == 'one':
+            #必须指定一个选项
+            if arg == '':
+                raise Exception('need at least on option after %s' % self.prev())
+
+            for d in desc:
+                if d['name'] == arg:
+                    return self.__pack_dict(d, True)
+            else:
+                raise Exception('unknown option %s' % arg)
+
+
+        elif chose == 'all':
+            #优默认值的选项可以不用指定，这样可以使用默认值
+            if order is True:
+                for d in desc:
+                    if d['name'] == arg:
+                        self.__pack_dict(d)
+                        arg = self.next()
+                        if arg.startswith('--') is True:
+                            arg = arg[2:]
+                        elif len(arg) != 0:
+                            raise Exception('argument %s is not an option' % arg)
+                    else:
+                        self.__pack_dict(d)
+                else:
+                    if arg != '':
+                        self.back()
+                return True
+
+            else:
+                options = [key['name'] for key in desc]
+                while True:
+                    for d in desc:
+                        if arg == d['name']:
+                            self.__pack_dict(d)
+                            if arg in options:
+                                options.remove(arg)
+                            break
+                    else:
+                        self.back()
+                        if len(options) != 0:
+                            raise Exception('')
+                        else:
+                            break
+                    arg = self.next()
+                    if arg.startswith('--') is True:
+                        arg = arg[2:]
+                    elif len(arg) != 0:
+                        raise Exception('')
+
+        elif chose == 'multi':
+            if order is True:
+                for d in desc:
+                    while True:
+                        if arg == d['name']:
+                            self.__pack_dict(d)
+                            arg = self.next()
+                            if arg.startswith('--') is True:
+                                arg = arg[2:]
+                            elif len(arg) != 0:
+                                raise Exception('')
+                            else:
+                                break
+                        elif d['optional'] is False:
+                            self.__pack_dict(d)
+                            break
+                else:
+                    if len(arg) != 0:
+                        self.back()
+
+            else:
+                options = {desc[i]['name']:i for i in range(len(desc))}
+                not_optional = [ d['name'] for d in desc if d['optional'] is False]
+
+                while True:
+                    if arg in options:
+                        self.__pack_dict(desc[options[arg]])
+                        if arg in not_optional:
+                            not_optional.remove(arg)
+                    else:
+                        if arg != '':
+                            self.back()
+                        if len(not_optional) != 0:
+                            raise Exception('')
+                        else:
+                            break
+                    arg = self.next()
+                    if arg.startswith('--') is True:
+                        arg = arg[2:]
+                    elif len(arg) != 0:
+                        raise Exception('')
+        else:
+            raise Exception('')
+
+
+p = PacketPacker('cmd.json')
+p.pack()
