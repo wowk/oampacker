@@ -95,7 +95,6 @@ class PacketPacker:
             raise Exception('argument %s is not an option' % arg)
 
         if chose == 'one':
-            #必须指定一个选项
             if arg == '':
                 raise Exception('need at least on option after %s' % self.previous())
 
@@ -105,9 +104,7 @@ class PacketPacker:
             else:
                 raise Exception('unknown option %s' % arg)
 
-
         elif chose == 'all':
-            #优默认值的选项可以不用指定，这样可以使用默认值
             if order is True:
                 for d in desc:
                     if d['name'] == arg:
@@ -166,8 +163,8 @@ class PacketPacker:
                     if len(arg) != 0:
                         self.back()
             else:
-                options = {desc[i]['name']:i for i in range(len(desc))}
-                not_optional = [ d['name'] for d in desc if d['optional'] is False]
+                options = {desc[i]['name']: i for i in range(len(desc))}
+                not_optional = [d['name'] for d in desc if d['optional'] is False]
                 while True:
                     if arg in options:
                         self.__pack_dict(desc[options[arg]])
