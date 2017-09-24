@@ -61,7 +61,7 @@ class PackerBuffer:
 	def push(self, type, size, data):
 		if type not in self.ops:
 			raise Exception('unknown data type: %s' % type)
-		#print('type: %s, len: %s, data: %s' % (type, len, data))
+		print('type: %s, len: %s, data: %s' % (type, len, data))
 		self.items.append((type, size, self.ops[type](size, data),))
 
 	def __parse_bit(self, size, data):
@@ -95,12 +95,13 @@ class PackerBuffer:
 
 	def __parse_int(self, size, data):
 		try:
-			data = hex(int(data))[2:]
+			if data.startswith('0x') is False:
+				data = hex(int(data))[2:]
+			else:
+				data = data[2:]
 		except ValueError:
-			print(data)
 			raise Exception('')
 		if len(data)/2 > size:
-			print(data, size)
 			raise Exception('')
 		data = data.ljust(size*2, '0')
 		lst = [data[i:i+2] for i in range(0, size*2, 2)]
@@ -116,13 +117,25 @@ class PackerBuffer:
 			raise Exception('')
 		elif len(data)/2 > size:
 			raise Exception('')
-		print('========', data)
-		data = data.rjust(size * 2, '0')
-		print('========', data)
+		print(data)
+		data = data.ljust(size * 2, '0')
+		print(data)
 		return bytes.fromhex(data)
 
 	def to_byte_array(self):
-		pass
+		ret = b''
+		for item in self.items:
+			if isinstance(item, Padding) is True:
+				d = item.data()
+				if d[1] == 0:
+					continue
+				ret += self.__parse_int(d[1], str(d[2]))
+			else:
+				ret += item[2]
+		if len(ret) < 64:
+			ret += b"\x00" * (64 - len(ret))
+
+		return ret
 
 
 class PacketPacker:
@@ -361,3 +374,9 @@ for item in items:
 		print(item.data())
 	else:
 		print(item)
+
+all_bytes = p.buf.to_byte_array()
+for i in range(len(all_bytes)):
+	if i % 8 == 0:
+		print('')
+	print(hex(all_bytes[i]).j, end=' ')
