@@ -42,7 +42,7 @@
                 "found": 0,
                 "type": "hex",
                 "len": 2,
-                "data": "0x8809"
+                "data": "0x8800"
             }
         ]
     },
@@ -154,7 +154,8 @@
                                             {
                                                 "name": "ctrl",
                                                 "order": false,
-                                                "chose": "multi"
+                                                "chose": "multi",
+                                                "padding": "none"
                                             },
                                             {
                                                 "name": "object",
@@ -189,7 +190,8 @@
                                                                 "order": false,
                                                                 "chose": "all",
                                                                 "padding": "bytes",
-                                                                "len": 1
+                                                                "len": 1,
+                                                                "base": 0
                                                             },
                                                             {
                                                                 "name": "num",
@@ -240,7 +242,7 @@
                                         "found": 0,
                                         "type": "hex",
                                         "len": 1,
-                                        "data": "0x01",
+                                        "data": "0x03",
                                         "sub": [
                                             {
                                                 "name": "ctrl",
@@ -259,7 +261,9 @@
                                                         "name": "ctrl",
                                                         "order": false,
                                                         "chose": "multi",
-                                                        "padding": "bytes"
+                                                        "padding": "bytes",
+                                                        "len": 1,
+                                                        "base": 0
                                                     },
                                                     {
                                                         "name": "newrule",
@@ -274,7 +278,9 @@
                                                                 "name": "ctrl",
                                                                 "order": false,
                                                                 "chose": "multi",
-                                                                "padding": "bytes"
+                                                                "padding": "bytes",
+                                                                "len": 1,
+                                                                "base": 0
                                                             },
                                                             {
                                                                 "name": "rule",
@@ -382,7 +388,9 @@
                                                                                 "name": "ctrl",
                                                                                 "order": false,
                                                                                 "chose": "multi",
-                                                                                "padding": "count"
+                                                                                "padding": "counts",
+                                                                                "len": 1,
+                                                                                "base": 0
                                                                             },
                                                                             {
                                                                                 "name": "clause",
